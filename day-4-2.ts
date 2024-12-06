@@ -1,4 +1,4 @@
-const text = await Deno.readTextFile("input-day-4-test.txt");
+const text = await Deno.readTextFile("input-day-4.txt");
 
 let xmasCount = 0;
 
@@ -14,28 +14,38 @@ const checkForXmas = (
   let diagonalMatches: CoordinateStore = [];
 
   line.matchAll(/MAS/g).forEach((value) => {
-    console.log(value, index, diagonal);
-    diagonalMatches.push({
-      x:
-        diagonal === "first"
-          ? value.index + 1
-          : lines[0].length - value.index - 2,
-      y: Math.abs(index) + value.index + 1,
-    });
+    if (diagonal === "first") {
+      diagonalMatches.push({
+        x: index < 0 ? value.index + 1 : Math.abs(index) + value.index + 1,
+        y: index < 0 ? Math.abs(index) + value.index + 1 : value.index + 1,
+      });
+    } else {
+      diagonalMatches.push({
+        x:
+          lines[0].length -
+          1 -
+          (index < 0 ? value.index + 1 : Math.abs(index) + value.index + 1),
+        y: index < 0 ? Math.abs(index) + value.index + 1 : value.index + 1,
+      });
+    }
   });
 
   line.matchAll(/SAM/g).forEach((value) => {
-    console.log(value, index, diagonal);
-    diagonalMatches.push({
-      x:
-        diagonal === "first"
-          ? value.index + 1
-          : lines[0].length - value.index - 2,
-      y: Math.abs(index) + value.index + 1,
-    });
+    if (diagonal === "first") {
+      diagonalMatches.push({
+        x: index < 0 ? value.index + 1 : Math.abs(index) + value.index + 1,
+        y: index < 0 ? Math.abs(index) + value.index + 1 : value.index + 1,
+      });
+    } else {
+      diagonalMatches.push({
+        x:
+          lines[0].length -
+          1 -
+          (index < 0 ? value.index + 1 : Math.abs(index) + value.index + 1),
+        y: index < 0 ? Math.abs(index) + value.index + 1 : value.index + 1,
+      });
+    }
   });
-
-  console.log(diagonalMatches);
 
   return diagonalMatches!;
 };
